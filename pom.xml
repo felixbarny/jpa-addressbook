@@ -12,6 +12,7 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <stagemonitor.version>0.13.0-SNAPSHOT</stagemonitor.version>
     </properties>
 
     <dependencies>
@@ -40,7 +41,27 @@
             <artifactId>switch</artifactId>
             <version>2.0.1</version>
         </dependency>
-    </dependencies>
+		<dependency>
+			<groupId>org.stagemonitor</groupId>
+			<artifactId>stagemonitor-web</artifactId>
+			<version>${stagemonitor.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.stagemonitor</groupId>
+			<artifactId>stagemonitor-os</artifactId>
+			<version>${stagemonitor.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.stagemonitor</groupId>
+			<artifactId>stagemonitor-alerting</artifactId>
+			<version>${stagemonitor.version}</version>
+		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>p6spy</groupId>-->
+			<!--<artifactId>p6spy</artifactId>-->
+			<!--<version>2.1.4-SNAPSHOT</version>-->
+		<!--</dependency>-->
+	</dependencies>
     
     <build>
         <plugins>
@@ -49,6 +70,9 @@
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
                 <version>1.0.2.Final</version>
+				<configuration>
+					<jvmArgs>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</jvmArgs>
+				</configuration>
             </plugin>
             <plugin>
                 <groupId>in.virit.vwscdn</groupId>
@@ -80,6 +104,12 @@
             <id>vaadin-addons</id>
             <url>http://maven.vaadin.com/vaadin-addons</url>
         </repository>
+		<repository>
+			<id>snapshots-repo</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+			<releases><enabled>false</enabled></releases>
+			<snapshots><enabled>true</enabled></snapshots>
+		</repository>
     </repositories>
     
     <pluginRepositories>
